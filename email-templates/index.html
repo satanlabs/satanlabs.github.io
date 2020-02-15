@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Email-Templates</title>
+</head>
+<body>
+	<p>email-templates nexus - inspired by GitHub</p>
+	<div id="myDiv"></div>
+	<script type="text/javascript">
+		var mydiv = document.getElementById("myDiv");
+		for(let i = 1 ; i <= 20 ;i++){
+			var aTag = document.createElement('a');
+			aTag.setAttribute('href',"http://satanlabs.github.io/email-templates/" + i);
+			aTag.setAttribute('target',"_blank");
+			aTag.innerHTML = "Email Template " + i;
+
+			mydiv.appendChild(aTag);
+			mydiv.appendChild(document.createElement('br'));	
+		}
+	</script>
+
+
+</body>
+</html>
