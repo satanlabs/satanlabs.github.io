@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JSON Diff - Online JSON Compare Diff Finder</title>
+    <link rel="stylesheet" href="www/lib/codemirror/lib/codemirror.css" charset="utf-8">
+    <link rel="stylesheet" href="www/lib/codemirror/theme/tomorrow-night.css" charset="utf-8">
+    <link rel="stylesheet" href="css/main.css" charset="utf-8">
+  </head>
+  <body>
+    <header id="header">
+      <div class="left">
+        <h1 class="left">{} Json Diff</h1>
+        <h2 class="left">Online JSON Compare</h2>
+      </div>
+      <div class="right">
+        <span id="error-message" style="display:none;"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        	 width="512.209px" height="512.209px" viewBox="0 0 512.209 512.209" style="enable-background:new 0 0 512.209 512.209;"
+        	 xml:space="preserve">
+        <g>
+        	<path d="M507.345,439.683L288.084,37.688c-3.237-5.899-7.71-10.564-13.429-13.988c-5.705-3.427-11.893-5.142-18.554-5.142
+        		s-12.85,1.718-18.558,5.142c-5.708,3.424-10.184,8.089-13.418,13.988L4.859,439.683c-6.663,11.998-6.473,23.989,0.57,35.98
+        		c3.239,5.517,7.664,9.897,13.278,13.128c5.618,3.237,11.66,4.859,18.132,4.859h438.529c6.479,0,12.519-1.622,18.134-4.859
+        		c5.62-3.23,10.038-7.611,13.278-13.128C513.823,463.665,514.015,451.681,507.345,439.683z M292.655,411.132
+        		c0,2.662-0.91,4.897-2.71,6.704c-1.807,1.811-3.949,2.71-6.427,2.71h-54.816c-2.474,0-4.616-0.899-6.423-2.71
+        		c-1.809-1.807-2.713-4.042-2.713-6.704v-54.248c0-2.662,0.905-4.897,2.713-6.704c1.807-1.811,3.946-2.71,6.423-2.71h54.812
+        		c2.479,0,4.62,0.899,6.428,2.71c1.803,1.807,2.71,4.042,2.71,6.704v54.248H292.655z M292.088,304.357
+        		c-0.198,1.902-1.198,3.47-3.001,4.709c-1.811,1.238-4.046,1.854-6.711,1.854h-52.82c-2.663,0-4.947-0.62-6.849-1.854
+        		c-1.908-1.243-2.858-2.807-2.858-4.716l-4.853-130.47c0-2.667,0.953-4.665,2.856-5.996c2.474-2.093,4.758-3.14,6.854-3.14h62.809
+        		c2.098,0,4.38,1.043,6.854,3.14c1.902,1.331,2.851,3.14,2.851,5.424L292.088,304.357z"/>
+        </svg> Invalid JSON</span>
+        <div class="settings-menu">
+          <svg class="header-icon" width="38" height="38" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1152 896q0-106-75-181t-181-75-181 75-75 181 75 181 181 75 181-75 75-181zm512-109v222q0 12-8 23t-20 13l-185 28q-19 54-39 91 35 50 107 138 10 12 10 25t-9 23q-27 37-99 108t-94 71q-12 0-26-9l-138-108q-44 23-91 38-16 136-29 186-7 28-36 28h-222q-14 0-24.5-8.5t-11.5-21.5l-28-184q-49-16-90-37l-141 107q-10 9-25 9-14 0-25-11-126-114-165-168-7-10-7-23 0-12 8-23 15-21 51-66.5t54-70.5q-27-50-41-99l-183-27q-13-2-21-12.5t-8-23.5v-222q0-12 8-23t19-13l186-28q14-46 39-92-40-57-107-138-10-12-10-24 0-10 9-23 26-36 98.5-107.5t94.5-71.5q13 0 26 10l138 107q44-23 91-38 16-136 29-186 7-28 36-28h222q14 0 24.5 8.5t11.5 21.5l28 184q49 16 90 37l142-107q9-9 24-9 13 0 25 10 129 119 165 170 7 8 7 22 0 12-8 23-15 21-51 66.5t-54 70.5q26 50 41 98l183 28q13 2 21 12.5t8 23.5z" fill="#fff"/></svg>
+          <div class="settings-menu-content">
+            <label class="menu-item">persist history to local storage <input id="localstorage-toggle" type="checkbox" checked/></label>
+            <label class="menu-item">light theme <input id="lighttheme-toggle" type="checkbox"/></label>
+            <div class="menu-item">
+              <button id="download-diff-button" type="button" name="button">⬇ Download Diff</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="left-panel">
+      <div id="history-container" class="history-container">
+      </div>
+      <div class="made-by-text"><a href="https://github.com/blitlabs/online-json-diff" target="_blank" rel="noopener noreferrer">made with ♥ <br />by https://github.com/blitlabs/online-json-diff</a></div>
+    </div>
+    <div class="diff-inputs">
+      <div id="left-input" class="json-diff-input split">
+        <textarea id="json-diff-left"></textarea>
+        <span class="input-buttons">
+          <a class="input-collapse" href="#">–</a>
+          <a class="input-split" href="#">◫</a>
+          <a class="input-expand" href="#">☐</a>
+        </span>
+      </div>
+      <div id="right-input" class="json-diff-input split">
+        <textarea id="json-diff-right"></textarea>
+        <span class="input-buttons">
+          <a class="input-collapse" href="#">–</a>
+          <a class="input-split" href="#">◫</a>
+          <a class="input-expand" href="#">☐</a>
+        </span>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="www/lib/fast-json-patch/dist/json-patch-duplex.min.js" charset="utf-8"></script>
+    <script src="www/lib/backbone-events-standalone/backbone-events-standalone.min.js" charset="utf-8"></script>
+    <script src="www/lib/codemirror/lib/codemirror.js" charset="utf-8"></script>
+    <script src="www/lib/codemirror/lib/util/formatting.js" charset="utf-8"></script>
+    <script src="www/lib/codemirror/mode/javascript/javascript.js" charset="utf-8"></script>
+    <script src="www/lib/codemirror/addon/edit/matchbrackets.js" charset="utf-8"></script>
+    <script src="www/lib/json-source-map.js" charset="utf-8"></script>
+    <script src="js/main.js" charset="utf-8"></script>
+    <script>
+      var isLightTheme = localStorage.getItem('lighttheme');
+      if (isLightTheme) {
+        enableLightTheme();
+      }
+      var dontSaveDiffs = localStorage.getItem('dont-save-diffs');
+      if (dontSaveDiffs) {
+        $('#localstorage-toggle').get(0).checked = false;
+      }
+      $('#lighttheme-toggle').on('change', function (e) {
+        toggleLightTheme();
+      });
+
+      $('#localstorage-toggle').on('change', function (e) {
+        if (!e.currentTarget.checked) {
+          localStorage.setItem('dont-save-diffs', true);
+          localStorage.removeItem('current-diff');
+          localStorage.removeItem('diff-history');
+        } else {
+          localStorage.removeItem('dont-save-diffs');
+        }
+
+      });
+
+      $('#download-diff-button').on('click', onClickDownloadDiff);
+      $('#left-input').on('click', '.input-collapse,.input-split,.input-expand', onPaneResizeLeftClick);
+      $('#right-input').on('click', '.input-collapse,.input-split,.input-expand', onPaneResizeRightClick);
+
+      function toggleLightTheme() {
+        var isLightTheme = localStorage.getItem('lighttheme');
+        if (isLightTheme) {
+          disableLightTheme();
+        } else {
+          enableLightTheme();
+        }
+      }
+
+      function enableLightTheme() {
+        localStorage.setItem('lighttheme', true);
+        $('body').addClass('lighttheme');
+        $('#lighttheme-toggle').get(0).checked = true;
+        setTheme('default');
+      }
+
+      function disableLightTheme() {
+        localStorage.removeItem('lighttheme');
+        $('body').removeClass('lighttheme');
+        $('#lighttheme-toggle').get(0).checked = false;
+        setTheme('tomorrow-night');
+      }
+
+      function setTheme(theme) {
+        var views = getInputViews();
+        views.left.codemirror.setOption('theme', theme);
+        views.right.codemirror.setOption('theme', theme);
+        compareJson();
+      }
+
+      function onClickDownloadDiff() {
+        var filename = 'diff.json';
+        var text = JSON.stringify(window.diff, null, 2);
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+      }
+
+      function onPaneResizeLeftClick(e) {
+        onResize(e, 'left');
+      }
+
+      function onPaneResizeRightClick(e) {
+        onResize(e, 'right');
+      }
+
+      function onResize(e, side) {
+        e.preventDefault();
+        var otherSide = side === 'left' ? 'right' : 'left';
+        var clickClass = e.currentTarget.className;
+        $('.json-diff-input').removeClass('split');
+        $('.json-diff-input').removeClass('expand');
+        $('.json-diff-input').removeClass('collapse');
+        var sideClass = 'split';
+        var otherSideClass = 'split';
+        if (clickClass === 'input-collapse') {
+          sideClass = 'collapse';
+          otherSideClass = 'expand';
+        } else if (clickClass === 'input-expand') {
+          sideClass = 'expand';
+          otherSideClass = 'collapse';
+        }
+        $('#' + side + '-input').addClass(sideClass);
+        $('#' + otherSide + '-input').addClass(otherSideClass);
+      }
+    </script>
+  </body>
+</html>

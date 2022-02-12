@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<a href="https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=my%20name%20is%20fish&tl=en"> sample url </a>
+
+<br /><br />
+
+Name: <input type="text" id="myText" value="Mickey Mouse" placeholder="text data here">
+
+<br /><br />
+<button onclick="openURL()">Try it</button>
+
+<script>
+function openURL() {
+	const textData = document.getElementById("myText").value ;
+	const apiURL = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=${textData}&tl=en`;
+
+window.open(apiURL , "_blank");
+
+
+}
+</script>
+
+</body>
+</html>
